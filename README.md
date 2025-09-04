@@ -19,7 +19,7 @@ Meduline is a modern, lightweight, and scalable solution designed to simplify de
 ### Clone the repository:
 
 ```
-git clone https://github.com/your-username/meduline.git
+git clone https://github.com/meduline/meduline.git
 cd meduline
 ```
 
