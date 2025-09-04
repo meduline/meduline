@@ -1,6 +1,10 @@
 {
   "name": "meduline",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meduline/meduline.git"
+  },
+  "license": "MIT",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
