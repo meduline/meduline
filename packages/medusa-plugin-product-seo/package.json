@@ -1,0 +1,93 @@
+{
+  "name": "@meduline/medusa-plugin-product-seo",
+  "version": "0.0.8",
+  "description": "SEO plugin for Medusa V2 to manage SEO for products and categories.",
+  "license": "MIT",
+  "files": [
+    ".medusa/server"
+  ],
+  "author": "Keyur Shah",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meduline/meduline.git"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    "./workflows": "./.medusa/server/src/workflows/index.js",
+    "./.medusa/server/src/modules/*": "./.medusa/server/src/modules/*/index.js",
+    "./modules/*": "./.medusa/server/src/modules/*/index.js",
+    "./providers/*": "./.medusa/server/src/providers/*/index.js",
+    "./*": "./.medusa/server/src/*.js",
+    "./admin": {
+      "import": "./.medusa/server/src/admin/index.mjs",
+      "require": "./.medusa/server/src/admin/index.js",
+      "default": "./.medusa/server/src/admin/index.js"
+    }
+  },
+  "keywords": [
+    "medusa",
+    "plugin",
+    "medusa-plugin-other",
+    "medusa-plugin",
+    "medusa-v2",
+    "seo",
+    "medusa-seo",
+    "medusa-plugin-seo",
+    "medusa-product-seo",
+    "medusa-category-seo"
+  ],
+  "scripts": {
+    "build": "medusa plugin:build",
+    "dev": "medusa plugin:develop",
+    "prepublishOnly": "medusa plugin:build"
+  },
+  "devDependencies": {
+    "@medusajs/admin-sdk": "2.10.1",
+    "@medusajs/cli": "2.10.1",
+    "@medusajs/framework": "2.10.1",
+    "@medusajs/icons": "2.10.1",
+    "@medusajs/medusa": "2.10.1",
+    "@medusajs/test-utils": "2.10.1",
+    "@medusajs/ui": "4.0.21",
+    "@mikro-orm/cli": "6.4.3",
+    "@mikro-orm/core": "6.4.3",
+    "@mikro-orm/knex": "6.4.3",
+    "@mikro-orm/migrations": "6.4.3",
+    "@mikro-orm/postgresql": "6.4.3",
+    "@swc/core": "1.13.5",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^24.3.1",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "awilix": "^8.0.1",
+    "pg": "^8.16.3",
+    "prop-types": "^15.8.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.4",
+    "yalc": "^1.0.0-pre.53"
+  },
+  "peerDependencies": {
+    "@medusajs/admin-sdk": "2.10.1",
+    "@medusajs/cli": "2.10.1",
+    "@medusajs/framework": "2.10.1",
+    "@medusajs/icons": "2.10.1",
+    "@medusajs/medusa": "2.10.1",
+    "@medusajs/test-utils": "2.10.1",
+    "@medusajs/ui": "4.0.3",
+    "@mikro-orm/cli": "6.4.3",
+    "@mikro-orm/core": "6.4.3",
+    "@mikro-orm/knex": "6.4.3",
+    "@mikro-orm/migrations": "6.4.3",
+    "@mikro-orm/postgresql": "6.4.3",
+    "awilix": "^8.0.1",
+    "clsx": "^2.1.1",
+    "pg": "^8.13.0",
+    "react-hook-form": "^7.54.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
