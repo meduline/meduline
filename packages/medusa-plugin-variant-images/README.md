@@ -1,6 +1,21 @@
-<h1 align="center">Medusa Variant Images</h1>
+<p align="center">
+  <a href="https://www.medusajs.com">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="http://avatars.githubusercontent.com/u/229819798?s=200&v=4">
+    <source media="(prefers-color-scheme: light)" srcset="hhttp://avatars.githubusercontent.com/u/229819798?s=200&v=4">
+    <img alt="Medusa logo" src="http://avatars.githubusercontent.com/u/229819798?s=200&v=4">
+    </picture>
+  </a>
+</p>
+<h1 align="center">
+Medusa Variant Images</h1>
 
 <p align="center"><strong>Adds the ability to give each product variant its own thumbnail and ordered images</strong></p>
+<p align="center">
+  <a href="https://github.com/medusajs/medusa/blob/master/CONTRIBUTING.md">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="PRs welcome!" />
+  </a>
+</p>
 
 <br />
 
@@ -47,12 +62,12 @@ npx medusa db:migrate
 #### In your frontend request to retrieve products from the backend, add the following field:
 
 ```js
-fields: '+metadata';
+fields: "+metadata";
 
 // Example
 sdk.client.fetch(`/store/products`, {
   query: {
-    fields: '{other fields},+metadata', // <-- ADD +metadata HERE
+    fields: "{other fields},+metadata", // <-- ADD +metadata HERE
   },
 });
 ```
