@@ -7,9 +7,9 @@
 ## Installation
 
 ```
-yarn add medusa-variant-images
+yarn add @meduline/medusa-plugin-variant-images
 
-npm i medusa-variant-images
+npm i @meduline/medusa-plugin-variant-images
 ```
 
 ## Compatibility
@@ -32,7 +32,7 @@ npm i medusa-variant-images
 ```ts
 plugins: [
   {
-    resolve: 'medusa-variant-images',
+    resolve: ' @meduline/medusa-plugin-variant-images',
     options: {},
   },
 ],
@@ -80,6 +80,10 @@ const images: Images[] | undefined = variant.metadata?.images;
 
 ## Bugs and Contributions
 
-See a bug? Please raise an issue on the [GitHub repository](https://github.com/meduline/medusa-plugin-variant-images/issues).
+See a bug? Please raise an issue on the [GitHub repository](https://github.com/meduline/medusline/issues).
 
-Want something to change? Feel free to clone the repository and open a PR once you have added your feature, or please open a feature request on the [GitHub repository](https://github.com/meduline/medusa-plugin-variant-images/discussions/categories/feature-requests)
+Want something to change? Feel free to clone the repository and open a PR once you have added your feature, or please open a feature request.
+
+## Credits
+
+This plugin has been forked from https://github.com/Betanoir/medusa-variant-images to work with Medusa 2.10.1 and above.
