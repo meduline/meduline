@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { SeoDetailsTypes } from "../../../modules/product-seo/models/seo-details";
 import SeoForm from "../../components/seo/SeoForm";
 import SeoDetails from "../../components/seo/SeoDetail";
-import { BrowserRouter as Router } from "react-router-dom";
 
 const fetchProductWithSeo = async (
   id: string
@@ -27,7 +26,6 @@ const ProductSeoWidget = ({ data }: { data: any }) => {
   }, []);
 
   return (
-    <Router>
       <Container className="divide-y p-0">
         <div className="flex items-center justify-between px-6 py-4">
           <Heading className="text-xlarge font-bold">
@@ -61,7 +59,6 @@ const ProductSeoWidget = ({ data }: { data: any }) => {
           <div className="text-center py-4">No SEO available</div>
         )}
       </Container>
-    </Router>
   );
 };
 
