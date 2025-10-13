@@ -2,7 +2,6 @@ import { Button, Container, FocusModal, Heading } from "@medusajs/ui";
 
 import { defineWidgetConfig } from "@medusajs/admin-sdk";
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
 import { SeoDetailsTypes } from "../../../modules/product-seo/models/seo-details";
 import SeoDetails from "../../components/seo/SeoDetail";
 import SeoForm from "../../components/seo/SeoForm";
@@ -27,7 +26,6 @@ const ProductSeoWidget = ({ data }: { data: any }) => {
   }, []);
 
   return (
-    <Router>
       <Container className="divide-y p-0">
         <div className="flex items-center justify-between px-6 py-4">
           <Heading className="text-xlarge font-bold">
@@ -61,7 +59,6 @@ const ProductSeoWidget = ({ data }: { data: any }) => {
           <div className="text-center py-4">No SEO available</div>
         )}
       </Container>
-    </Router>
   );
 };
 
