@@ -1,0 +1,39 @@
+import {
+  createWorkflow,
+  createStep,
+  StepResponse,
+  WorkflowResponse,
+} from "@medusajs/framework/workflows-sdk"
+import { SIZE_GUIDE_MODULE } from "../modules/size-guide"
+import { Modules } from "@medusajs/framework/utils"
+
+export type DetachSizeGuideInput = {
+  size_guide_id: string
+  product_id: string
+}
+
+const detachSizeGuideFromProductStep = createStep(
+  "detach-size-guide-from-product-step",
+  async (input: DetachSizeGuideInput, { container }) => {
+    const remoteLink = container.resolve("remoteLink" as any)
+
+    await remoteLink.dismiss({
+      [SIZE_GUIDE_MODULE]: {
+        size_guide_id: input.size_guide_id,
+      },
+      [Modules.PRODUCT]: {
+        product_id: input.product_id,
+      },
+    })
+
+    return new StepResponse(input)
+  }
+)
+
+export const detachSizeGuideFromProductWorkflow = createWorkflow(
+  "detach-size-guide-from-product",
+  function (input: DetachSizeGuideInput) {
+    const result = detachSizeGuideFromProductStep(input)
+    return new WorkflowResponse(result)
+  }
+)

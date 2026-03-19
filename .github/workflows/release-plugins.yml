@@ -1,0 +1,100 @@
+name: Release plugins
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/medusa-plugin-*/**"
+      - ".github/workflows/release-plugins.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Publish changed plugins
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${NODE_AUTH_TOKEN:-}" ]]; then
+            echo "NPM_TOKEN is not set. Add it to repository secrets."
+            exit 1
+          fi
+
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            BASE_SHA="${{ github.event.before }}"
+          else
+            BASE_SHA="$(git rev-parse HEAD~1)"
+          fi
+
+          HEAD_SHA="${{ github.sha }}"
+          echo "Comparing changes from $BASE_SHA to $HEAD_SHA"
+
+          changed_files="$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" || true)"
+
+          shopt -s nullglob
+          plugin_dirs=(packages/medusa-plugin-*)
+
+          published_any=false
+
+          for dir in "${plugin_dirs[@]}"; do
+            [[ -d "$dir" ]] || continue
+
+            if ! grep -q "^$dir/" <<<"$changed_files"; then
+              echo "Skipping $dir (no changes in diff range)"
+              continue
+            fi
+
+            package_json="$dir/package.json"
+            if [[ ! -f "$package_json" ]]; then
+              echo "Skipping $dir (missing package.json)"
+              continue
+            fi
+
+            package_name="$(node -p "require('./$package_json').name")"
+            package_version="$(node -p "require('./$package_json').version")"
+            package_private="$(node -p "Boolean(require('./$package_json').private)")"
+
+            if [[ "$package_private" == "true" ]]; then
+              echo "Skipping $package_name@$package_version (private package)"
+              continue
+            fi
+
+            if npm view "${package_name}@${package_version}" version >/dev/null 2>&1; then
+              echo "Skipping $package_name@$package_version (already published)"
+              continue
+            fi
+
+            echo "Publishing $package_name@$package_version from $dir"
+            npm publish "$dir" --access public --provenance
+            published_any=true
+          done
+
+          if [[ "$published_any" == "false" ]]; then
+            echo "No plugin packages needed publishing."
+          fi
