@@ -91,7 +91,9 @@ jobs:
             fi
 
             echo "Publishing $package_name@$package_version from $dir"
-            npm publish "$dir" --access public --provenance
+            # Use an explicit local path (`./...`) so npm treats it as a directory,
+            # not as an npm package spec (which would trigger git SSH lookups).
+            npm publish "./$dir" --access public --provenance
             published_any=true
           done
 
