@@ -1,6 +1,6 @@
 {
   "name": "@meduline/medusa-plugin-size-guide",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Reusable size guides for Medusa v2 with product and product-type assignment plus store/admin APIs.",
   "author": "Meduline",
   "license": "MIT",
