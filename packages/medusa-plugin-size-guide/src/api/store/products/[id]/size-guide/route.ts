@@ -1,6 +1,5 @@
 import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import { SIZE_GUIDE_MODULE } from "../../../../../modules/size-guide"
-import SizeGuideModuleService from "../../../../../modules/size-guide/service"
 import { Modules } from "@medusajs/framework/utils"
 
 /**
@@ -14,28 +13,27 @@ export async function GET(
 ) {
   const productId = req.params.id
   const query = req.scope.resolve("query" as any)
-  const sizeGuideService: SizeGuideModuleService =
-    req.scope.resolve(SIZE_GUIDE_MODULE)
 
-  // Try direct product link first
+  // Try direct product link first. Query from product side and expand linked size_guide.
   const { data: productLinks } = await query.graph({
-    entity: "size_guide",
+    entity: "product",
     fields: [
       "id",
-      "name",
-      "description",
-      "type",
-      "instruction_image_url",
-      "columns",
-      "entries.*",
+      "size_guide.id",
+      "size_guide.name",
+      "size_guide.description",
+      "size_guide.type",
+      "size_guide.instruction_image_url",
+      "size_guide.columns",
+      "size_guide.entries.*",
     ],
     filters: {
-      products: { id: productId },
+      id: productId,
     },
   })
 
-  if (productLinks?.length) {
-    return res.json({ size_guide: productLinks[0] })
+  if (productLinks?.[0]?.size_guide) {
+    return res.json({ size_guide: productLinks[0].size_guide })
   }
 
   // Fallback: look up product's type, then try product-type link
@@ -53,24 +51,26 @@ export async function GET(
     return res.json({ size_guide: null })
   }
 
+  // Fallback: query from product_type side and expand linked size_guide.
   const { data: typeLinks } = await query.graph({
-    entity: "size_guide",
+    entity: "product_type",
     fields: [
       "id",
-      "name",
-      "description",
-      "type",
-      "instruction_image_url",
-      "columns",
-      "entries.*",
+      "size_guide.id",
+      "size_guide.name",
+      "size_guide.description",
+      "size_guide.type",
+      "size_guide.instruction_image_url",
+      "size_guide.columns",
+      "size_guide.entries.*",
     ],
     filters: {
-      product_types: { id: product.type_id },
+      id: product.type_id,
     },
   })
 
-  if (typeLinks?.length) {
-    return res.json({ size_guide: typeLinks[0] })
+  if (typeLinks?.[0]?.size_guide) {
+    return res.json({ size_guide: typeLinks[0].size_guide })
   }
 
   res.json({ size_guide: null })
